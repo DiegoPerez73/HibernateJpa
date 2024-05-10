@@ -1,0 +1,38 @@
+<persistence
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
+	version="2.2">
+
+	<!-- Una unidad de persistencia define un conjunto de clases entidad que 
+		residen en una única base de datos. -->
+
+	<!--El name de la unidad de persistencia, se lo doy yo. Este es el del ejemplo -->
+	<persistence-unit name="unidadDiego"
+		transaction-type="RESOURCE_LOCAL"> <!-- Manejo la bbdd de manera local. RESOURCE_LOCAL (Manejado por mi) Podria 
+			ser "JTA": Manejado por el servidor de aplicación. -->
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider> <!--Indicamos el proveedor -->
+		<class>jpa.orm.persistencia.hibernate.Persona</class> <!-- Indicamos las clases a persistir en bbdd -->
+
+		<!-- Propiedades que describen el deployment. Le paso la info de mi bbdd 
+			(URL, PASS, USER) -->
+		<properties>
+			<property name="jakarta.persistence.jdbc.driver"
+				value="org.h2.Driver" />
+			<property name="jakarta.persistence.jdbc.url"
+				value="jdbc:h2:tcp://localhost/~/test" />
+			<property name="jakarta.persistence.jdbc.user" value="sa" />
+			<property name="jakarta.persistence.jdbc.password"
+				value="123" />
+
+			<!--Proveedor de persistencia, y schema de bbdd. (Si lo coloco aca, desde 
+				aca le digo que quiero hacer cada vez que lo corra). Por ej, aca pretendo 
+				que me dropee la tabla si existe (La borra y la vuelve a crear) -->
+			<property
+				name="jakarta.persistence.schema-generation.database.action"
+				value="drop-and-create" />
+		</properties>
+	</persistence-unit>
+
+</persistence>
